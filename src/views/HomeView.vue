@@ -8,13 +8,20 @@
       };
     },
     created: function () {
+      this.indexStateAbbr();
       this.indexStateData();
     },
     methods: {
-      indexStateData: function () {
+      indexStateAbbr: function () {
         axios.get("/states.json").then((response) => {
           console.log(response.data);
           this.abbr_array = response.data;
+        })
+      },
+      indexStateData: function () {
+        axios.get("/data.json").then((response) => {
+          console.log("indexing state data", response.data);
+          this.state_data_array = response.data;
         })
       }
     },
@@ -31,6 +38,13 @@
       <h3>{{state["abbrev"]}}</h3>
       <h3>{{state["code"]}}</h3>
     </div>
+
+    <div v-for="byState in state_data_array" v-bind:key="byState.state">
+      <h2>{{byState["state"]}}</h2>
+      <h2>{{byState["median_household_income"]}}</h2>
+      <h2>{{byState["state"]}}</h2>
+    </div>
+
   </div>
 </template>
 
